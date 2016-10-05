@@ -7,10 +7,9 @@ TEST SCRIPT FOR http://todomvc.com/examples/angularjs/#/ BY DAVID ALLEN
 This test script is written in JavaScript and uses the Node.js selenium-webdriver
 node module to drive the browser.
 
-TO USE (Debian-based Linux): Install node.js
-$ sudo apt-get install node.js
-Then use the NPM to install selenium-webdriver
-$ sudo npm install selenium-webdriver
+TO USE:
+  * Install node.js
+  * Then use the NPM to install selenium-webdriver
 
 Make sure you have the Chrome browser driver installed on your machine
 and that it's included in your $PATH
@@ -37,7 +36,7 @@ var driver = new webdriver.Builder()
     .forBrowser('chrome')
     .build();
 
-//poll the browser for change state for 5 sec before declaring failure.
+//poll the DOM for change state for 5 sec before declaring failure.
 //Not ideal. I hate hard-coding magic numbers
 driver.manage().timeouts().implicitlyWait(5000);
 
@@ -45,43 +44,30 @@ driver.manage().timeouts().implicitlyWait(5000);
 TESTING FUNCTIONS
 ******************************/
 
-/*** loads the page we want to test, beginning at http://todomvc.com/ ***/
-function loadPage() {
 
-  //navigate to the start page
-  if(!(driver.get('http://todomvc.com/'))) {
-    console.log('ERROR: Failed to resolve todomvc.com');
-    return false
-  }
-
-  //click on the link to the page we want to test
-  if(!(driver.findElement(By.linkText('AngularJS')).click())) {
-    console.log('ERROR: click link "AngularJS" failed');
-    return false;
-  }
-
-  console.log('loadPage PASSED');
-  return true;
-}
-
-/*** adds a new item to the todo list ***/
-function addToDo(text) {
-  loadPage();
-
-  //select 'to do' field and send keystrokes
-  driver.findElement(By.id('new-todo')).sendKeys(text + '\n');
-
-  //make sure element is added to list
-  var items = driver.findElements(By.className('ng-binding'));
-  
-
-}
 
 /******************************
 ACTUAL TESTS
 ******************************/
+//TEST ABILITY TO INPUT TEXT TO LIST
+var inputText = "BLAH BLAH BLAH!";
+//go to page
+driver.get('http://todomvc.com/');
+//click link
+driver.findElement(By.linkText('AngularJS')).click();
+//select text area element and input text
+driver.findElement(By.id('new-todo')).sendKeys(inputText + '\n').then(function(){
+  //now verify that it's been added to the list
+  var toDoItems = driver.findElements(By.className('ng-binding')).then(function(toDoItems){
+    for(var i = 0; i < toDoItems.length; i++) {
+      toDoItems[i].getText().then(function(text){
+        if(text === inputText) {
+          console.log("Item '" + inputText + "' successfully added");
+        }
+      });
+    }
+  });
+});
 
-
-addToDo("TESTING TEXT ITEM 1");
-
-// driver.quit();
+//kill the browser when done
+driver.quit();
