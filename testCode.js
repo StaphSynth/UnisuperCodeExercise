@@ -60,13 +60,23 @@ function addToDo(inputText){
   driver.findElement(By.id('new-todo')).sendKeys(inputText + '\n').then(function(){
     //now verify that it's been added to the list by looping through the list items and checking against innerHTML
     var toDoItems = driver.findElements(By.className('ng-binding')).then(function(toDoItems){
+      var promiseArray = [];
+      //add promises for unresolved data to array
       for(var i = 0; i < toDoItems.length; i++) {
-        toDoItems[i].getText().then(function(text){
-          if(text === inputText) {
-            console.log("Item '" + inputText + "' successfully added");
-          }
-        });
+        promiseArray.push(toDoItems[i].getText());
       }
+      /*resolve the unresolved data in the promise array
+      pass to anonymous function to perform check against original data
+      and return accordingly*/
+      Promise.all(promiseArray).then(function(array){
+        for(var i = 0; i < array.length; i++) {
+          if(array[i] === inputText){
+            console.log("ADD-TO-DO PASS: Item '" + inputText + "' successfully added");
+            return;
+          }
+          console.log("ADD-TO-DO FAIL: Item not added to list");
+        }
+      });
     });
   });
 }
@@ -131,11 +141,11 @@ function unComplete() {
 ACTUAL TESTS
 ******************************/
 
-//addToDo("some text here");
+addToDo("some text here");
 //driver.quit();
 
 //modifyItem("new list item value");
 
-complete();
+//complete();
 
 //driver.quit();
