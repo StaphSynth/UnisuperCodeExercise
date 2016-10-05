@@ -138,5 +138,4 @@ ACTUAL TESTS
 
 complete();
 
-//kill the browser when done
 //driver.quit();
