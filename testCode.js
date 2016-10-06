@@ -21,8 +21,8 @@ before going on to modify them.
 
 However, the only one I'm moderatly happy with is the first one and even that's
 missing a proper test framework. The others all have serious flaws in that they
-make poor assumptions. This is the best I've been able to do with the time given,
-though.
+make poor assumptions or don't really work. This is the best I've been able to
+do with the time given, though.
 
 ==========================================================================*/
 
