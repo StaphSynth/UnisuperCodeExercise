@@ -15,6 +15,15 @@ Note to self: Make sure you have the Chrome browser driver installed on your mac
 and that it's included in your $PATH
 See: https://christopher.su/2015/selenium-chromedriver-ubuntu/
 
+I've tried to write re-useable code here so that each test builds on the
+previous one and simply calls that function to set up the test conditions
+before going on to modify them.
+
+However, the only one I'm moderatly happy with is the first one and even that's
+missing a proper test framework. The others all have serious flaws in that they
+make poor assumptions. This is the best I've been able to do with the time given,
+though.
+
 ==========================================================================*/
 
 /******************************
@@ -84,7 +93,7 @@ function addToDo(inputText){
 }
 
 /*** TEST ABILITY TO MODIFY AN EXISTING TO-DO ITEM ***/
-/*Unfinished as I still can't figure out how to execute a double click event*/
+/*Unfinished as I still can't figure out how to execute a double click event in JS*/
 function modifyItem(newValue) {
   var originalValue = "Here's some default text for the list item";
   //first, create an item to modify
@@ -147,10 +156,14 @@ ACTUAL TESTS
 sequentially. There seem to be issues resolving promises after killing the
 browser and re-starting it again. Don't have time to trace what's going wrong. **/
 
-//addToDo("some text here");
+addToDo("some test text here");
 //driver.quit();
 
 //modifyItem("new list item value");
+//driver.quit();
 
-complete();
-driver.quit();
+//complete();
+//driver.quit();
+
+//unComplete();
+//driver.quit();
