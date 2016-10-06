@@ -41,7 +41,7 @@ var driver = new webdriver.Builder()
 //var assert = require('assert');
 
 //poll the DOM for change state for 5 sec before declaring failure.
-//Not ideal. I hate hard-coding magic numbers
+//Not ideal. I hate hard-coding magic numbers. Need a more robust solution.
 driver.manage().timeouts().implicitlyWait(5000);
 
 
@@ -51,6 +51,8 @@ TESTING FUNCTIONS
 ******************************/
 
 /*** TEST ABILITY TO ADD A TO-DO ITEM ***/
+/*Other than a lack of proper testing framework, this is the most complete test
+I've been able to write as it doesn't make any silly assumptions*/
 function addToDo(inputText){
   //go to page
   driver.get('http://todomvc.com/');
@@ -82,6 +84,7 @@ function addToDo(inputText){
 }
 
 /*** TEST ABILITY TO MODIFY AN EXISTING TO-DO ITEM ***/
+/*Unfinished as I still can't figure out how to execute a double click event*/
 function modifyItem(newValue) {
   var originalValue = "Here's some default text for the list item";
   //first, create an item to modify
@@ -91,14 +94,14 @@ function modifyItem(newValue) {
       for(var i = 0; i < toDoItems.length; i++) {
         toDoItems[i].getText().then(function(itemText){
           if(itemText === originalValue) {
-            //return true;
+            //do some stuff;
           }
         });
       }
     });
 }
 
-/*** TEST ABILITY TO COMPLETE TO-DO ITEM ***/
+/*** TEST ABILITY TO 'COMPLETE' TO-DO ITEM ***/
 /*This is obviously not a very robust test. It doesn't check the innerHTML
 of the list item to ensure it's actually the one we're looking for,
 and assumes there were no previously completed items.
@@ -115,7 +118,7 @@ function complete() {
   driver.findElement(By.className('toggle')).click().then(function(){
   //look for a class with 'completed' which didn't exist in the DOM before
     if(driver.findElement(By.className('completed')))
-      console.log("Task marked as completed");
+      console.log("COMPLETE PASS: Task marked as completed");
   });
 }
 
@@ -140,12 +143,14 @@ function unComplete() {
 /******************************
 ACTUAL TESTS
 ******************************/
+/** Un-comment out a test function to run it. I've had problems running them
+sequentially. There seem to be issues resolving promises after killing the
+browser and re-starting it again. Don't have time to trace what's going wrong. **/
 
-addToDo("some text here");
+//addToDo("some text here");
 //driver.quit();
 
 //modifyItem("new list item value");
 
-//complete();
-
-//driver.quit();
+complete();
+driver.quit();
