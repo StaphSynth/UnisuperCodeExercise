@@ -159,9 +159,6 @@ browser and re-starting it again. Don't have time to trace what's going wrong. *
 addToDo("some test text here");
 //driver.quit();
 
-//modifyItem("new list item value");
-//driver.quit();
-
 //complete();
 //driver.quit();
 
