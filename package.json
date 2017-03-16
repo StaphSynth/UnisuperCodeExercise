@@ -1,0 +1,27 @@
+{
+  "name": "unisuper-code-exercise",
+  "version": "1.0.0",
+  "description": "An automation testing exercise",
+  "main": "todo.spec.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/StaphSynth/UnisuperCodeExercise.git"
+  },
+  "keywords": [
+    "testing",
+    "angular",
+    "protractor"
+  ],
+  "author": "David Allen",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/StaphSynth/UnisuperCodeExercise/issues"
+  },
+  "homepage": "https://github.com/StaphSynth/UnisuperCodeExercise#readme",
+  "devDependencies": {
+    "protractor": "^5.1.1"
+  }
+}
