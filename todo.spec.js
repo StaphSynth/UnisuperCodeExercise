@@ -13,16 +13,18 @@ describe('test the todomvc', function() {
     browser.executeScript('window.localStorage.clear();');
   });
 
+
+
   describe('adding a new todo item', function() {
 
     it('should add a new item to the list', function() {
       var testText = 'some testing text';
 
-      element(by.id('new-todo')).sendKeys(testText + '\n\r');
+      $('#new-todo').sendKeys(testText + '\n\r');
 
       var listItems = element.all(by.repeater('todo in todos'));
       expect(listItems.count()).toEqual(1);
-      expect(listItems.get(0).element(by.tagName('label')).getText()).toEqual(testText);
+      expect(listItems.get(0).$('label').getText()).toEqual(testText);
     });
   });
 
@@ -31,10 +33,10 @@ describe('test the todomvc', function() {
     var listItems;
     var firstItemLabel;
 
-    //add some todo items to the list
+    //adds some todo items to the list
     function addSomeTodos(number) {
       for(var i = 0; i < number; i++) {
-        element(by.id('new-todo')).sendKeys(testText + '\n\r');
+        $('#new-todo').sendKeys(testText + '\n\r');
       }
     }
 
@@ -48,12 +50,27 @@ describe('test the todomvc', function() {
       });
     }
 
+    //verifies that every item in itemList is marked as flag
+    //pass it a string 'complete' or 'incomplete' to check either status
+    function listCompletionStatus(flag) {
+
+      if(flag === 'complete') {
+        listItems.each(function(item) {
+          expect(item.getAttribute('class')).toMatch('completed');
+        });
+      } else if(flag === 'incomplete') {
+        listItems.each(function(item) {
+          expect(item.getAttribute('class')).not.toMatch('completed');
+        });
+      }
+    }
+
 
     //env setup. Add some test data to the list for manipulation
     beforeEach(function() {
       addSomeTodos(1);
       listItems = element.all(by.repeater('todo in todos'));
-      firstItemLabel = listItems.get(0).element(by.tagName('label'));
+      firstItemLabel = listItems.get(0).$('label');
     });
 
 
@@ -66,7 +83,7 @@ describe('test the todomvc', function() {
       browser.actions().doubleClick(firstItemLabel).perform();
 
       //add additional text
-      listItems.get(0).element(by.css('input.edit')).sendKeys(testText + '\n\r');
+      listItems.get(0).$('input.edit').sendKeys(testText + '\n\r');
 
       //validate change
       expect(firstItemLabel.getText()).toEqual(testText + testText);
@@ -79,7 +96,7 @@ describe('test the todomvc', function() {
       expect(listItems.get(0).getAttribute('class')).not.toMatch('completed');
 
       //click toggle button to mark as complete
-      listItems.get(0).element(by.css('input.toggle')).click();
+      listItems.get(0).$('input.toggle').click();
 
       //validate the change
       expect(listItems.get(0).getAttribute('class')).toMatch('completed');
@@ -89,7 +106,7 @@ describe('test the todomvc', function() {
     it('validates that you can change a "complete" todo to "incomplete"', function() {
 
       //click toggle button to mark as complete
-      listItems.get(0).element(by.css('input.toggle')).click();
+      listItems.get(0).$('input.toggle').click();
 
       //check that it is actually marked as complete
       expect(listItems.get(0).getAttribute('class')).toMatch('completed');
@@ -109,7 +126,7 @@ describe('test the todomvc', function() {
       expect(listItems.count()).toEqual(1);
 
       //add another item
-      $('#new-todo').sendKeys(testText + '\n\r');
+      addSomeTodos(1);
 
       //verify that there are now two items on the list
       expect(listItems.count()).toEqual(2);
@@ -118,21 +135,17 @@ describe('test the todomvc', function() {
 
     it('verifies that clicking the master "complete" button marks all items as complete', function() {
 
-      //first add a few additional items to the list
+      //first add some additional items to the list
       addSomeTodos(5);
 
       //verify that the list items are not complete
-      listItems.each(function(item) {
-        expect(item.getAttribute('class')).not.toMatch('completed');
-      });
+      listCompletionStatus('incomplete');
 
       //click the button
       $('#toggle-all').click();
 
       //verify that items are marked as complete
-      listItems.each(function(item) {
-        expect(item.getAttribute('class')).toMatch('completed');
-      });
+      listCompletionStatus('complete');
     });
 
 
@@ -153,9 +166,7 @@ describe('test the todomvc', function() {
       expect(listItems.count()).toEqual(3);
 
       //expect remaining items to be 'complete'
-      listItems.each(function(item) {
-        expect(item.getAttribute('class')).toMatch('completed');
-      });
+      listCompletionStatus('complete');
 
       //click the 'active' button and the completed items disappear, leaving the incomplete items on the list
       $('#filters a[href="#/active"]').click();
@@ -164,10 +175,7 @@ describe('test the todomvc', function() {
       expect(listItems.count()).toEqual(3);
 
       //expect the remaining items to be incomplete
-      listItems.each(function(item) {
-        expect(item.getAttribute('class')).not.toMatch('completed');
-      });
-
+      listCompletionStatus('incomplete');
     });
 
 
@@ -192,7 +200,6 @@ describe('test the todomvc', function() {
 
       //add some items. total 6
       addSomeTodos(5);
-
 
       //mark half of them as complete
       setSecondsComplete();
