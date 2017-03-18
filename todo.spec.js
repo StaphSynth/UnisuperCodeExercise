@@ -1,10 +1,12 @@
 describe('test the todomvc', function() {
 
   var testText = 'some testing text';
+  var listItems;
 
   //go to the app home page
   beforeEach(function() {
     browser.get('http://todomvc.com/examples/angularjs/#/');
+    listItems = element.all(by.repeater('todo in todos'));
   });
 
   //burn the local storage after each test
@@ -18,11 +20,8 @@ describe('test the todomvc', function() {
   describe('adding a new todo item', function() {
 
     it('adds a new item to the list', function() {
-      var testText = 'some testing text';
 
       $('#new-todo').sendKeys(testText + '\n\r');
-
-      var listItems = element.all(by.repeater('todo in todos'));
       expect(listItems.count()).toEqual(1);
       expect(listItems.get(0).$('label').getText()).toEqual(testText);
     });
@@ -30,7 +29,6 @@ describe('test the todomvc', function() {
 
 
   describe('manipulating todo items that already exist', function() {
-    var listItems;
     var firstItemLabel;
 
     //adds some todo items to the list
@@ -69,7 +67,6 @@ describe('test the todomvc', function() {
     //env setup. Add some test data to the list for manipulation
     beforeEach(function() {
       addSomeTodos(1);
-      listItems = element.all(by.repeater('todo in todos'));
       firstItemLabel = listItems.get(0).$('label');
     });
 
