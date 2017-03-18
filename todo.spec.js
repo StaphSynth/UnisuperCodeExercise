@@ -180,20 +180,22 @@ describe('test the todomvc', function() {
 
 
 
-    // it('verifies that you can delete a single todo item by clicking its delete button', function() {
-    //
-    //   //total of two
-    //   addSomeTodos(1);
-    //
-    //   //verify
-    //   expect(listItems.count()).toEqual(2);
-    //
-    //   //delete the top item
-    //   listItems.get(0).$('button.destroy').click();
-    //
-    //   //verify that there's only one item on the list now
-    //   expect(listItems.count()).toEqual(1);
-    // });
+    it('verifies that you can delete a single todo item by clicking its delete button', function() {
+
+      //total of two
+      addSomeTodos(1);
+
+      //verify
+      expect(listItems.count()).toEqual(2);
+
+      //delete the top item
+      browser.actions().mouseMove(listItems.get(0)).perform().then(function() {
+        listItems.get(0).$('button.destroy').click();
+      });
+
+      //verify that there's only one item on the list now
+      expect(listItems.count()).toEqual(1);
+    });
 
 
     it('verifies that you can clear all completed items on the to-do list by clicking the "clear completed" button', function() {
@@ -213,8 +215,5 @@ describe('test the todomvc', function() {
       //now there should be only 3 items left in the list
       expect(listItems.count()).toEqual(3);
     });
-
-
   });
-
 });
