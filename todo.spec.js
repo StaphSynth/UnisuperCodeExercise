@@ -17,7 +17,7 @@ describe('test the todomvc', function() {
 
   describe('adding a new todo item', function() {
 
-    it('should add a new item to the list', function() {
+    it('adds a new item to the list', function() {
       var testText = 'some testing text';
 
       $('#new-todo').sendKeys(testText + '\n\r');
@@ -74,7 +74,7 @@ describe('test the todomvc', function() {
     });
 
 
-    it('should edit the content of an existing todo item', function() {
+    it('edits the content of an existing todo item', function() {
 
       //should start with this text
       expect(firstItemLabel.getText()).toEqual(testText);
@@ -133,7 +133,7 @@ describe('test the todomvc', function() {
     });
 
 
-    it('should mark all items complete by clicking master "complete" button', function() {
+    it('marks all items complete by clicking master "complete" button', function() {
 
       //first add some additional items to the list
       addSomeTodos(5);
@@ -150,7 +150,7 @@ describe('test the todomvc', function() {
 
 
 
-    it('should filter todo items based on their "complete" status', function() {
+    it('filters todo items based on their "complete" status', function() {
 
       //add 5 items, giving a total of 6
       addSomeTodos(5);
@@ -180,7 +180,7 @@ describe('test the todomvc', function() {
 
 
 
-    it('should delete a single todo item by clicking its delete button', function() {
+    it('deletes a single todo item by clicking its delete button', function() {
 
       //total of two
       addSomeTodos(1);
@@ -198,7 +198,7 @@ describe('test the todomvc', function() {
     });
 
 
-    it('should clear all completed items on the to-do list by clicking the "clear completed" button', function() {
+    it('clears all completed items on the to-do list by clicking the "clear completed" button', function() {
 
       //add some items. total 6
       addSomeTodos(5);
