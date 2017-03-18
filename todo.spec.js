@@ -90,7 +90,7 @@ describe('test the todomvc', function() {
     });
 
 
-    it('validates that you can mark a todo as complete', function() {
+    it('marks a todo as complete', function() {
 
       //check it's not already complete
       expect(listItems.get(0).getAttribute('class')).not.toMatch('completed');
@@ -103,7 +103,7 @@ describe('test the todomvc', function() {
     });
 
 
-    it('validates that you can change a "complete" todo to "incomplete"', function() {
+    it('changes a "complete" todo to "incomplete"', function() {
 
       //click toggle button to mark as complete
       listItems.get(0).$('input.toggle').click();
@@ -133,7 +133,7 @@ describe('test the todomvc', function() {
     });
 
 
-    it('verifies that clicking the master "complete" button marks all items as complete', function() {
+    it('should mark all items complete by clicking master "complete" button', function() {
 
       //first add some additional items to the list
       addSomeTodos(5);
@@ -150,7 +150,7 @@ describe('test the todomvc', function() {
 
 
 
-    it('verifies that you can filter todo items based on their "complete" status', function() {
+    it('should filter todo items based on their "complete" status', function() {
 
       //add 5 items, giving a total of 6
       addSomeTodos(5);
@@ -180,7 +180,7 @@ describe('test the todomvc', function() {
 
 
 
-    it('verifies that you can delete a single todo item by clicking its delete button', function() {
+    it('should delete a single todo item by clicking its delete button', function() {
 
       //total of two
       addSomeTodos(1);
@@ -198,7 +198,7 @@ describe('test the todomvc', function() {
     });
 
 
-    it('verifies that you can clear all completed items on the to-do list by clicking the "clear completed" button', function() {
+    it('should clear all completed items on the to-do list by clicking the "clear completed" button', function() {
 
       //add some items. total 6
       addSomeTodos(5);
